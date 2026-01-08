@@ -13,14 +13,10 @@ onAuthStateChanged(auth, async (user) => {
         return;
     }
 
-    console.log("Admin check for:", user.email);
-
     // Subscribe to real-time user data
     onSnapshot(doc(db, "users", user.uid), async (snapshot) => {
         if (!snapshot.exists()) {
-            // AUTO-REPAIR: If this is the admin email, create the doc immediately
             if (user.email === 'admin@gamestation.com') {
-                console.log("Admin doc missing, auto-repairing...");
                 const username = user.displayName || 'Admin';
                 await setDoc(doc(db, "users", user.uid), {
                     id: user.uid,
@@ -34,22 +30,16 @@ onAuthStateChanged(auth, async (user) => {
                     warnings: [],
                     notifications: []
                 });
-                return; // Second snapshot will trigger the success path
-            } else {
-                console.warn("Non-admin or missing doc, redirecting...");
-                window.location.href = '../index.html';
                 return;
             }
         }
 
         const userData = snapshot.data();
         if (!userData || !userData.isAdmin) {
-            console.warn("User is not admin, redirecting...");
             window.location.href = '../index.html';
             return;
         }
 
-        console.log("Admin verified!");
         currentUser = userData;
         initDashboard();
     }, (error) => {

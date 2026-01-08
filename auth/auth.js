@@ -1,10 +1,9 @@
-// Authentication System - Robust Version
+// Authentication System
 import { auth, db } from "./firebase-config.js";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 import { doc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-console.log("TEST: Auth Script Initialized");
-alert("Debug: Auth Script is active. If you see this, the code is running!");
+console.log("Auth System Initialized");
 
 const loginTab = document.getElementById('loginTab');
 const signupTab = document.getElementById('signupTab');
