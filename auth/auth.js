@@ -57,24 +57,35 @@ signupPassword?.addEventListener('input', (e) => {
 // Handle Login
 loginForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
+    console.log("Login form submitted...");
     const identifier = document.getElementById('loginIdentifier').value.trim();
     const password = document.getElementById('loginPassword').value;
     const errorEl = document.getElementById('loginError');
+    const submitBtn = loginForm.querySelector('button[type="submit"]');
 
     try {
         errorEl.innerText = '';
+        submitBtn.innerText = 'Loging in...';
+        submitBtn.disabled = true;
+
+        console.log("Attempting sign in for:", identifier);
         const userCredential = await signInWithEmailAndPassword(auth, identifier, password);
         const user = userCredential.user;
+        console.log("Sign in successful, UID:", user.uid);
 
         // Update Online Status
         await updateDoc(doc(db, "users", user.uid), {
             isOnline: true,
             lastLogin: new Date().toISOString()
         });
+        console.log("Firestore status updated, redirecting...");
 
         window.location.href = '../index.html';
     } catch (error) {
         console.error("Login Error:", error);
+        submitBtn.innerText = 'Sign In';
+        submitBtn.disabled = false;
+
         if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
             errorEl.innerText = '❌ Invalid email or password';
         } else if (error.code === 'auth/invalid-email') {
