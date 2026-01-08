@@ -1,3 +1,8 @@
+// Authentication System - Robust Version
+import { auth, db } from "./firebase-config.js";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+import { doc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
 console.log("TEST: Auth Script Initialized");
 alert("Debug: Auth Script is active. If you see this, the code is running!");
 
@@ -43,17 +48,16 @@ loginForm?.addEventListener('submit', async (e) => {
         const userCredential = await signInWithEmailAndPassword(auth, identifier, password);
         const user = userCredential.user;
 
-        // SMART FIX: Try updating database but don't wait for it if it hangs
+        // Smart database update (non-blocking)
         try {
             updateDoc(doc(db, "users", user.uid), {
                 isOnline: true,
                 lastLogin: new Date().toISOString()
-            }).catch(e => console.warn("Database status update skipped (API likely disabled)"));
-        } catch (dbError) {
-            console.warn("Firestore not ready yet.");
+            }).catch(err => console.warn("Database status update failed:", err));
+        } catch (dbErr) {
+            console.warn("Firestore access ignored.");
         }
 
-        // Redirect regardless of Firestore success
         window.location.href = '../index.html';
     } catch (error) {
         console.error("Login Error:", error);
@@ -89,7 +93,6 @@ signupForm?.addEventListener('submit', async (e) => {
         await updateProfile(user, { displayName: username });
         const isAdmin = email === 'admin@gamestation.com';
 
-        // Attempting to create user document
         try {
             await setDoc(doc(db, "users", user.uid), {
                 id: user.uid,
