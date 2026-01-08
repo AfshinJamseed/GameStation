@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Hangman | GameStation</title>
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="nav-bar">
+            <a href="../index.html" class="back-link">
+                <span>←</span> Back to Hub
+            </a>
+            <h3>Neon Hangman</h3>
+        </nav>
+
+        <div class="game-container hangman-container">
+            <div class="game-info">
+                <div class="category">Category: <span id="category">Tech</span></div>
+                <div class="lives">Lives: <span id="lives">6</span>/6</div>
+            </div>
+
+            <div class="hangman-visual">
+                <!-- SVG Drawing Area -->
+                <svg id="hangmanSvg" width="200" height="250" viewBox="0 0 200 250">
+                    <!-- Base -->
+                    <line x1="20" y1="230" x2="180" y2="230" class="hangman-part base" />
+                    <line x1="100" y1="230" x2="100" y2="20" class="hangman-part pole" />
+                    <line x1="100" y1="20" x2="150" y2="20" class="hangman-part top" />
+                    <line x1="150" y1="20" x2="150" y2="50" class="hangman-part rope" />
+
+                    <!-- Body Parts (Initially hidden via CSS/JS) -->
+                    <circle cx="150" cy="70" r="20" class="hangman-part body-part head" id="part-0" />
+                    <line x1="150" y1="90" x2="150" y2="150" class="hangman-part body-part" id="part-1" /> <!-- Body -->
+                    <line x1="150" y1="100" x2="120" y2="130" class="hangman-part body-part" id="part-2" />
+                    <!-- Left Arm -->
+                    <line x1="150" y1="100" x2="180" y2="130" class="hangman-part body-part" id="part-3" />
+                    <!-- Right Arm -->
+                    <line x1="150" y1="150" x2="120" y2="190" class="hangman-part body-part" id="part-4" />
+                    <!-- Left Leg -->
+                    <line x1="150" y1="150" x2="180" y2="190" class="hangman-part body-part" id="part-5" />
+                    <!-- Right Leg -->
+                </svg>
+            </div>
+
+            <div class="word-display" id="wordDisplay">
+                <!-- Letters will be injected here -->
+            </div>
+
+            <div class="keyboard" id="keyboard">
+                <!-- Keys A-Z injected here -->
+            </div>
+
+            <div class="controls status-container">
+                <p id="gameStatus" class="game-end-msg"></p>
+                <button class="btn btn-primary" id="restartBtn" style="display: none;">Play Again</button>
+            </div>
+        </div>
+    </div>
+    <script src="hangman.js"></script>
+    <script type="module" src="../script.js"></script>
+</body>
+
+</html>

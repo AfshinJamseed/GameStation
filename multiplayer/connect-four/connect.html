@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gravity Connect Four | GameStation</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="connect-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="nav-bar">
+            <a href="../index.html" class="back-link">
+                <span>←</span> Back to Multiplayer
+            </a>
+            <h3>Gravity Connect Four</h3>
+        </nav>
+
+        <div class="game-container">
+            <div class="turn-indicator" id="turnIndicator">
+                <span id="currentPlayer">Player 1</span>'s Turn
+            </div>
+
+            <div id="connectBoard" class="connect-board"></div>
+
+            <div class="game-message" id="gameMessage" style="display: none;"></div>
+            <button class="btn btn-glass" id="resetBtn">New Game</button>
+        </div>
+    </div>
+    <script src="connect.js"></script>
+    <script type="module" src="../../script.js"></script>
+</body>
+
+</html>

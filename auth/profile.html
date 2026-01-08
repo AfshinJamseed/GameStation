@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | GameStation</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../modal.css">
+    <link rel="stylesheet" href="profile-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="nav-bar">
+            <a href="../index.html" class="back-link">
+                <span>←</span> Back to Hub
+            </a>
+            <h3>Profile</h3>
+        </nav>
+
+        <div class="profile-container">
+            <div class="profile-box">
+                <div class="profile-header">
+                    <div class="profile-avatar">👤</div>
+                    <h1 id="profileUsername">Username</h1>
+                    <p class="profile-email" id="profileEmail">email@example.com</p>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Account Information</h3>
+                    <div class="info-item">
+                        <label>Username:</label>
+                        <span id="displayUsername">-</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Email:</label>
+                        <span id="displayEmail">-</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Member Since:</label>
+                        <span id="memberSince">-</span>
+                    </div>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Edit Profile</h3>
+                    <form id="profileForm">
+                        <div class="form-group">
+                            <label>Nickname (Display Name)</label>
+                            <input type="text" id="nicknameInput" placeholder="Enter your nickname" required
+                                minlength="2">
+                        </div>
+                        <div class="success-message" id="successMessage"></div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+
+                <div class="profile-actions">
+                    <button class="btn btn-secondary" id="changePasswordBtn"
+                        style="margin-bottom: 1rem; background: var(--card-bg); border: 1px solid var(--glass-border); color: var(--text-primary);">Change
+                        Password</button>
+                    <button class="btn btn-glass" id="logoutBtn">Logout</button>
+                </div>
+
+                <div class="danger-zone">
+                    <h3>Danger Zone</h3>
+                    <p class="danger-warning">⚠️ This action cannot be undone</p>
+                    <button class="btn btn-danger" id="deleteAccountBtn">Delete Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../modal.js"></script>
+    <script type="module" src="profile.js"></script>
+    <script src="../script.js"></script>
+</body>
+
+</html>

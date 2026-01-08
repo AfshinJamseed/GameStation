@@ -1,0 +1,83 @@
+.grid-2048 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 12px;
+    max-width: 400px;
+    margin: 0 auto 2rem;
+}
+
+.tile {
+    aspect-ratio: 1;
+    background: var(--card-bg);
+    border: 2px solid var(--glass-border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    transition: all 0.15s;
+}
+
+.tile[data-value="2"] {
+    background: rgba(0, 243, 255, 0.2);
+    color: #00f3ff;
+}
+
+.tile[data-value="4"] {
+    background: rgba(0, 255, 157, 0.2);
+    color: #00ff9d;
+}
+
+.tile[data-value="8"] {
+    background: rgba(188, 19, 254, 0.2);
+    color: #bc13fe;
+}
+
+.tile[data-value="16"] {
+    background: rgba(0, 243, 255, 0.3);
+    color: #00f3ff;
+}
+
+.tile[data-value="32"] {
+    background: rgba(0, 255, 157, 0.3);
+    color: #00ff9d;
+}
+
+.tile[data-value="64"] {
+    background: rgba(188, 19, 254, 0.3);
+    color: #bc13fe;
+}
+
+.tile[data-value="128"] {
+    background: rgba(0, 243, 255, 0.4);
+    color: #00f3ff;
+    font-size: 1.8rem;
+}
+
+.tile[data-value="256"] {
+    background: rgba(0, 255, 157, 0.4);
+    color: #00ff9d;
+    font-size: 1.8rem;
+}
+
+.tile[data-value="512"] {
+    background: rgba(188, 19, 254, 0.4);
+    color: #bc13fe;
+    font-size: 1.8rem;
+}
+
+.tile[data-value="1024"] {
+    background: rgba(0, 243, 255, 0.5);
+    color: #00f3ff;
+    font-size: 1.5rem;
+}
+
+.tile[data-value="2048"] {
+    background: rgba(255, 215, 0, 0.5);
+    color: #ffd700;
+    font-size: 1.5rem;
+}

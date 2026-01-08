@@ -1,0 +1,45 @@
+.test-area {
+    background: var(--card-bg);
+    border: 2px solid var(--accent-cyan);
+    border-radius: 20px;
+    padding: 3rem;
+    max-width: 500px;
+    margin: 0 auto 2rem;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s;
+}
+
+.test-area.active {
+    border-color: var(--accent-green);
+    box-shadow: 0 0 30px rgba(0, 255, 157, 0.3);
+}
+
+.test-area:active {
+    transform: scale(0.98);
+}
+
+#status {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+}
+
+#timer {
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    margin: 1rem 0;
+}
+
+#clicks {
+    font-size: 2rem;
+    color: var(--accent-magenta);
+    margin: 1rem 0;
+}
+
+#cps {
+    font-size: 1.8rem;
+    color: var(--accent-green);
+}

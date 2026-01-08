@@ -1,0 +1,65 @@
+/* Gravity Switch styles */
+.gravity-hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 2rem;
+}
+
+.player-info {
+    flex: 1;
+    text-align: center;
+}
+
+.player-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.score-display {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    margin: 0.5rem 0;
+}
+
+.controls-hint {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.gravity-display {
+    padding: 1rem 2rem;
+    background: var(--card-bg);
+    border: 2px solid var(--glass-border);
+    border-radius: 50px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--accent-magenta);
+    text-align: center;
+    min-width: 200px;
+}
+
+#gravityCanvas {
+    background: linear-gradient(135deg, rgba(0, 10, 25, 0.95), rgba(0, 5, 15, 0.9));
+    border: 3px solid rgba(0, 150, 243, 0.5);
+    border-radius: 12px;
+    box-shadow: 0 0 40px rgba(0, 150, 243, 0.4), inset 0 0 60px rgba(0, 150, 243, 0.1);
+    display: block;
+    margin: 0 auto 2rem;
+}
+
+.game-message {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    margin-bottom: 1rem;
+}
+
+#resetBtn {
+    display: block;
+    margin: 0 auto;
+}

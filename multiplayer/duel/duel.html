@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Duel | GameStation</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="duel-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="nav-bar">
+            <a href="../index.html" class="back-link">
+                <span>←</span> Back to Multiplayer
+            </a>
+            <h3>Space Duel</h3>
+        </nav>
+
+        <div class="game-container">
+            <div class="duel-hud">
+                <div class="player-status">
+                    <div class="player-name">Player 1</div>
+                    <div class="health-bar">
+                        <div class="health-fill" id="p1Health"></div>
+                    </div>
+                    <div class="controls-hint">WASD + Space</div>
+                </div>
+
+                <div class="gravity-indicator" id="gravityIndicator">
+                    <span>⬇️ Gravity (G to flip)</span>
+                </div>
+
+                <div class="player-status">
+                    <div class="player-name">Player 2</div>
+                    <div class="health-bar">
+                        <div class="health-fill" id="p2Health"></div>
+                    </div>
+                    <div class="controls-hint">Arrows + Enter</div>
+                </div>
+            </div>
+
+            <canvas id="duelCanvas"></canvas>
+
+            <div class="game-message" id="gameMessage" style="display: none;"></div>
+            <button class="btn btn-glass" id="resetBtn" style="display: none;">New Round</button>
+        </div>
+    </div>
+    <script src="duel.js"></script>
+    <script type="module" src="../../script.js"></script>
+</body>
+
+</html>

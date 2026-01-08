@@ -1,0 +1,59 @@
+/* Pong-specific styles */
+.pong-info {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 2rem;
+}
+
+.player-score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.player-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.score-big {
+    font-size: 4rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-magenta));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.vs-divider {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    opacity: 0.5;
+}
+
+#pongCanvas {
+    background: linear-gradient(135deg, rgba(30, 0, 40, 0.95), rgba(10, 0, 20, 0.9));
+    border: 3px solid rgba(188, 19, 254, 0.5);
+    border-radius: 12px;
+    box-shadow: 0 0 40px rgba(188, 19, 254, 0.4), inset 0 0 60px rgba(188, 19, 254, 0.1);
+    display: block;
+    margin: 0 auto 2rem;
+}
+
+.game-message {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--accent-cyan);
+    margin-bottom: 1rem;
+}
+
+#resetBtn {
+    display: block;
+    margin: 0 auto;
+}

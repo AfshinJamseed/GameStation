@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications | GameStation</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="modal.css">
+    <link rel="stylesheet" href="notifications.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Global Nav will be injected here -->
+
+        <div class="notifications-container" style="margin-top: 80px;">
+            <div class="notifications-header">
+                <h3>Notifications</h3>
+                <button class="btn-mark-read" id="markAllReadBtn">Mark all as read</button>
+            </div>
+
+            <div class="notifications-list" id="notificationsList">
+                <!-- Populated by JS -->
+                <div class="empty-state">
+                    <p>No notifications yet</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="modal.js"></script>
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>

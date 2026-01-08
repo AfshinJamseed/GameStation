@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameStation | Play & Chill</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header class="hub-header">
+            <div class="user-indicator" id="userIndicator">
+                <a href="auth/login.html" class="user-link" id="userLink">Login</a>
+            </div>
+            <h1 class="hub-title">GameStation</h1>
+            <p class="hub-subtitle">Select your game and start playing</p>
+        </header>
+
+        <main class="games-grid">
+            <!-- Tic Tac Toe Card -->
+            <a href="tic-tac-toe/tictactoe.html" class="game-card">
+                <div class="card-icon">❌⭕</div>
+                <h2 class="card-title">Tic-Tac-Toe</h2>
+                <p class="card-desc">Classic strategy. Challenge your friend or face the AI.</p>
+                <span class="btn btn-primary">Play Now</span>
+            </a>
+
+            <!-- Snake Game Card -->
+            <a href="snake/snake.html" class="game-card">
+                <div class="card-icon">🐍</div>
+                <h2 class="card-title">Neon Snake</h2>
+                <p class="card-desc">Navigate the grid. Eat the orb. Don't crash.</p>
+                <span class="btn btn-primary">Play Now</span>
+            </a>
+
+            <!-- Hangman Game Card -->
+            <a href="hangman/hangman.html" class="game-card">
+                <div class="card-icon">😵</div>
+                <h2 class="card-title">Neon Hangman</h2>
+                <p class="card-desc">Guess the word. Don't let the neon man hang.</p>
+                <span class="btn btn-primary">Play Now</span>
+            </a>
+
+            <!-- Memory Match Card -->
+            <a href="memory-match/memory.html" class="game-card">
+                <div class="card-icon">🧠</div>
+                <h2 class="card-title">Memory Match</h2>
+                <p class="card-desc">Find the matching pairs. Test your memory skills.</p>
+                <span class="btn btn-primary">Play Now</span>
+            </a>
+
+            <!-- Space Invaders Card -->
+            <a href="space-invaders/invaders.html" class="game-card">
+                <div class="card-icon">👾</div>
+                <h2 class="card-title">Space Invaders</h2>
+                <p class="card-desc">Defend Earth! Shoot the alien invaders.</p>
+                <span class="btn btn-primary">Play Now</span>
+            </a>
+
+            <!-- 2048 Card -->
+            <a href="game-2048/2048.html" class="game-card">
+                <div class="card-icon">🔢</div>
+                <h2 class="card-title">2048</h2>
+                <p class="card-desc">Merge tiles to reach 2048. Strategy puzzle.</p>
+                <span class="btn btn-primary">Play Now</span>
+            </a>
+
+            <!-- Click Speed Test Card -->
+            <a href="click-test/click-test.html" class="game-card">
+                <div class="card-icon">⚡</div>
+                <h2 class="card-title">Click Speed</h2>
+                <p class="card-desc">How fast can you click? Test your reflexes.</p>
+                <span class="btn btn-primary">Test Now</span>
+            </a>
+
+            <!-- Type Speed Test Card -->
+            <a href="type-test/type-test.html" class="game-card">
+                <div class="card-icon">⌨️</div>
+                <h2 class="card-title">Type Speed</h2>
+                <p class="card-desc">Measure your typing speed and accuracy.</p>
+                <span class="btn btn-primary">Test Now</span>
+            </a>
+
+            <!-- Multiplayer Section -->
+            <a href="multiplayer/index.html" class="game-card"
+                style="grid-column: span 2; background: linear-gradient(135deg, rgba(188, 19, 254, 0.1), rgba(0, 243, 255, 0.1));">
+                <div class="card-icon">🎮</div>
+                <h2 class="card-title">Multiplayer Arena</h2>
+                <p class="card-desc">Challenge a friend! 4 exciting 2-player games.</p>
+                <span class="btn btn-primary">Enter Arena</span>
+            </a>
+        </main>
+    </div>
+    <script type="module" src="auth/auth-utils.js"></script>
+    <script src="modal.js"></script>
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>

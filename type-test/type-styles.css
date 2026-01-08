@@ -1,0 +1,59 @@
+.typing-area {
+    max-width: 700px;
+    margin: 0 auto 2rem;
+}
+
+.text-display {
+    background: var(--card-bg);
+    border: 2px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    font-size: 1.3rem;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    min-height: 150px;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.5px;
+}
+
+.text-display span {
+    position: relative;
+}
+
+.text-display .correct {
+    color: var(--accent-green);
+}
+
+.text-display .incorrect {
+    color: #ff4444;
+    background: rgba(255, 68, 68, 0.1);
+}
+
+.text-display .current {
+    background: rgba(0, 243, 255, 0.2);
+    border-bottom: 2px solid var(--accent-cyan);
+}
+
+.typing-input {
+    width: 100%;
+    min-height: 100px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid var(--accent-cyan);
+    border-radius: 12px;
+    padding: 1rem;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    font-family: 'Courier New', monospace;
+    resize: none;
+}
+
+.typing-input:focus {
+    outline: none;
+    border-color: var(--accent-green);
+    box-shadow: 0 0 20px rgba(0, 255, 157, 0.3);
+}
+
+.typing-input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

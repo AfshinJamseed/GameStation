@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | GameStation</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../modal.css">
+    <link rel="stylesheet" href="admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="nav-bar">
+            <a href="profile.html" class="back-link">
+                <span>←</span> Back to Profile
+            </a>
+            <h3>Admin Dashboard</h3>
+        </nav>
+
+        <div class="admin-container">
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <h4>Total Users</h4>
+                    <span id="totalUsers">0</span>
+                </div>
+                <!-- Add more stats if needed -->
+            </div>
+
+            <div class="users-list-section">
+                <h3>User Management</h3>
+                <div class="table-responsive">
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Joined</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../modal.js"></script>
+    <script type="module" src="admin.js"></script>
+    <script src="../script.js"></script>
+</body>
+
+</html>

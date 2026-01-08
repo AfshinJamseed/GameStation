@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Pong | GameStation</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="pong-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="nav-bar">
+            <a href="../index.html" class="back-link">
+                <span>←</span> Back to Multiplayer
+            </a>
+            <h3>Neon Pong</h3>
+        </nav>
+
+        <div class="game-container">
+            <div class="pong-info">
+                <div class="player-score">
+                    <span class="player-label">Player 1 (W/S)</span>
+                    <span class="score-big" id="player1Score">0</span>
+                </div>
+                <div class="vs-divider">VS</div>
+                <div class="player-score">
+                    <span class="player-label">Player 2 (↑/↓)</span>
+                    <span class="score-big" id="player2Score">0</span>
+                </div>
+            </div>
+
+            <canvas id="pongCanvas"></canvas>
+
+            <div class="game-message" id="gameMessage">Press SPACE to Start</div>
+            <button class="btn btn-glass" id="resetBtn" style="display: none;">New Game</button>
+        </div>
+    </div>
+    <script src="pong.js"></script>
+    <script type="module" src="../../script.js"></script>
+</body>
+
+</html>

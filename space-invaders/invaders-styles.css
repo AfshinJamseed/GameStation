@@ -1,0 +1,10 @@
+canvas#invadersCanvas {
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--accent-cyan);
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
+    display: block;
+    margin: 0 auto 2rem;
+    max-width: 100%;
+    height: auto;
+}

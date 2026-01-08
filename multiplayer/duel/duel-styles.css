@@ -1,0 +1,86 @@
+/* Space Duel styles */
+.duel-hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 2rem;
+}
+
+.player-status {
+    flex: 1;
+    text-align: center;
+}
+
+.player-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.health-bar {
+    height: 30px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--glass-border);
+    border-radius: 15px;
+    overflow: hidden;
+    margin: 0.5rem auto;
+    max-width: 300px;
+}
+
+.health-fill {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #00ff9d, #00f3ff);
+    transition: width 0.3s;
+    box-shadow: 0 0 20px currentColor;
+}
+
+#p1Health {
+    background: linear-gradient(90deg, #00f3ff, #0099cc);
+}
+
+#p2Health {
+    background: linear-gradient(90deg, #bc13fe, #ff00ff);
+}
+
+.controls-hint {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+}
+
+.gravity-indicator {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    text-align: center;
+    padding: 1rem;
+    background: var(--card-bg);
+    border-radius: 50px;
+    border: 2px solid var(--glass-border);
+    min-width: 200px;
+}
+
+#duelCanvas {
+    background: linear-gradient(135deg, rgba(0, 25, 35, 0.95), rgba(0, 15, 20, 0.9));
+    border: 3px solid rgba(0, 243, 255, 0.5);
+    border-radius: 12px;
+    box-shadow: 0 0 40px rgba(0, 243, 255, 0.4), inset 0 0 60px rgba(0, 243, 255, 0.1);
+    display: block;
+    margin: 0 auto 2rem;
+}
+
+.game-message {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    margin-bottom: 1rem;
+}
+
+#resetBtn {
+    display: block;
+    margin: 0 auto;
+}
