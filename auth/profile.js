@@ -113,7 +113,7 @@ document.getElementById('logoutBtn')?.addEventListener('click', async () => {
             }
         } catch (e) { }
         await signOut(auth);
-        window.location.href = '../index.html';
+        window.location.href = '/index.html';
     }
 });
 

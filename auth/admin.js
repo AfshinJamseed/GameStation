@@ -9,7 +9,7 @@ let currentUser = null;
 // 1. Protection & Auth Listeners
 onAuthStateChanged(auth, async (user) => {
     if (!user) {
-        window.location.href = '../index.html';
+        window.location.href = '/index.html';
         return;
     }
 
@@ -36,7 +36,7 @@ onAuthStateChanged(auth, async (user) => {
 
         const userData = snapshot.data();
         if (!userData || !userData.isAdmin) {
-            window.location.href = '../index.html';
+            window.location.href = '/index.html';
             return;
         }
 
@@ -47,7 +47,7 @@ onAuthStateChanged(auth, async (user) => {
         // If it's a permission error, it's likely because Firestore is disabled
         if (error.code === 'permission-denied') {
             alert("⚠️ Firestore Database not enabled. Please enable it in Firebase Console to use the Admin Dashboard.");
-            window.location.href = '../index.html';
+            window.location.href = '/index.html';
         }
     });
 });

@@ -317,15 +317,27 @@ function setupGlobalNav(user) {
         </div>
     `;
 
-    // Reliable Path Fixing
+
+
+    // Robust Dynamic Root Path Calculation
     const path = window.location.pathname;
-    const isInsideAuth = path.includes('/auth/');
-    const rootPrefix = isInsideAuth ? '../' : '';
+    let cleanPath = path.split('?')[0].split('#')[0];
+    if (cleanPath.endsWith('/')) cleanPath = cleanPath.slice(0, -1);
+    const parts = cleanPath.split('/').filter(p => p !== '' && !p.includes('.html'));
+    const depth = parts.length;
+    let rootPrefix = '';
+    for (let i = 0; i < depth; i++) rootPrefix += '../';
+
+    // Hide manual user indicator from index.html if present
+    const userIndicator = document.getElementById('userIndicator');
+    if (userIndicator) userIndicator.style.display = 'none';
 
     const brand = nav.querySelector('.nav-brand');
     const home = nav.querySelectorAll('.nav-link')[0];
     brand.href = rootPrefix + 'index.html';
     home.href = rootPrefix + 'index.html';
+
+    const isInsideAuth = path.includes('/auth/');
 
     if (user) {
         const friends = nav.querySelectorAll('.nav-link')[1];

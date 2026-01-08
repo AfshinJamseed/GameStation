@@ -57,7 +57,7 @@ loginForm?.addEventListener('submit', async (e) => {
             console.warn("Firestore access ignored.");
         }
 
-        window.location.href = '../index.html';
+        window.location.href = '/index.html';
     } catch (error) {
         console.error("Login Error:", error);
         submitBtn.innerText = 'Sign In';
@@ -109,7 +109,7 @@ signupForm?.addEventListener('submit', async (e) => {
             console.error("Database setup failed on signup:", dbError);
         }
 
-        window.location.href = '../index.html';
+        window.location.href = '/index.html';
     } catch (error) {
         console.error("Signup Error:", error);
         submitBtn.innerText = 'Create Account';
