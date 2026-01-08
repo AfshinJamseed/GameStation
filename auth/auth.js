@@ -1,7 +1,9 @@
-// Authentication System
+// Authentication System - Simplified with Debugging
 import { auth, db } from "./firebase-config.js";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, browserLocalPersistence, setPersistence } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 import { doc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+console.log("TEST: Auth Script Loaded Successfully!");
 
 const loginTab = document.getElementById('loginTab');
 const signupTab = document.getElementById('signupTab');
@@ -9,11 +11,6 @@ const loginForm = document.getElementById('loginForm');
 const signupForm = document.getElementById('signupForm');
 const authTitle = document.getElementById('authTitle');
 const authSubtitle = document.getElementById('authSubtitle');
-
-// Setup persistence
-setPersistence(auth, browserLocalPersistence).catch(error => {
-    console.error("Persistence error:", error);
-});
 
 // Toggle between login and signup
 loginTab.addEventListener('click', () => {
@@ -38,26 +35,28 @@ signupTab.addEventListener('click', () => {
 const signupPassword = document.getElementById('signupPassword');
 const strengthIndicator = document.getElementById('passwordStrength');
 
-signupPassword?.addEventListener('input', (e) => {
-    const password = e.target.value;
-    let strength = 0;
+if (signupPassword) {
+    signupPassword.addEventListener('input', (e) => {
+        const password = e.target.value;
+        let strength = 0;
+        if (password.length >= 6) strength++;
+        if (password.length >= 10) strength++;
+        if (/[A-Z]/.test(password)) strength++;
+        if (/[0-9]/.test(password)) strength++;
+        if (/[^A-Za-z0-9]/.test(password)) strength++;
 
-    if (password.length >= 6) strength++;
-    if (password.length >= 10) strength++;
-    if (/[A-Z]/.test(password)) strength++;
-    if (/[0-9]/.test(password)) strength++;
-    if (/[^A-Za-z0-9]/.test(password)) strength++;
-
-    strengthIndicator.className = 'password-strength';
-    if (strength <= 2) strengthIndicator.classList.add('weak');
-    else if (strength <= 4) strengthIndicator.classList.add('medium');
-    else strengthIndicator.classList.add('strong');
-});
+        strengthIndicator.className = 'password-strength';
+        if (strength <= 2) strengthIndicator.classList.add('weak');
+        else if (strength <= 4) strengthIndicator.classList.add('medium');
+        else strengthIndicator.classList.add('strong');
+    });
+}
 
 // Handle Login
 loginForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    console.log("Login form submitted...");
+    console.log("Attempting login...");
+
     const identifier = document.getElementById('loginIdentifier').value.trim();
     const password = document.getElementById('loginPassword').value;
     const errorEl = document.getElementById('loginError');
@@ -65,72 +64,56 @@ loginForm?.addEventListener('submit', async (e) => {
 
     try {
         errorEl.innerText = '';
-        submitBtn.innerText = 'Loging in...';
+        submitBtn.innerText = 'Logging in...';
         submitBtn.disabled = true;
 
-        console.log("Attempting sign in for:", identifier);
         const userCredential = await signInWithEmailAndPassword(auth, identifier, password);
         const user = userCredential.user;
-        console.log("Sign in successful, UID:", user.uid);
 
         // Update Online Status
         await updateDoc(doc(db, "users", user.uid), {
             isOnline: true,
             lastLogin: new Date().toISOString()
         });
-        console.log("Firestore status updated, redirecting...");
 
         window.location.href = '../index.html';
     } catch (error) {
-        console.error("Login Error:", error);
+        console.error("Detailed Login Error:", error);
         submitBtn.innerText = 'Sign In';
         submitBtn.disabled = false;
-
-        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
-            errorEl.innerText = '❌ Invalid email or password';
-        } else if (error.code === 'auth/invalid-email') {
-            errorEl.innerText = '❌ Invalid email format';
-        } else {
-            errorEl.innerText = '❌ ' + error.message;
-        }
+        errorEl.innerText = '❌ ' + error.message;
     }
 });
 
 // Handle Signup
 signupForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
+    console.log("Attempting signup...");
+
     const username = document.getElementById('signupUsername').value.trim();
     const email = document.getElementById('signupEmail').value.trim();
     const password = document.getElementById('signupPassword').value;
     const confirm = document.getElementById('signupConfirm').value;
     const errorEl = document.getElementById('signupError');
+    const submitBtn = signupForm.querySelector('button[type="submit"]');
 
-    // Validation
     if (password !== confirm) {
         errorEl.innerText = '❌ Passwords do not match';
         return;
     }
 
-    if (password.length < 6) {
-        errorEl.innerText = '❌ Password must be at least 6 characters';
-        return;
-    }
-
     try {
         errorEl.innerText = '';
-        // Create Authentication
+        submitBtn.innerText = 'Creating Account...';
+        submitBtn.disabled = true;
+
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        // Update Profile
-        await updateProfile(user, {
-            displayName: username
-        });
+        await updateProfile(user, { displayName: username });
 
-        // Determine if Admin (First admin hardcoded or by email)
         const isAdmin = email === 'admin@gamestation.com';
 
-        // Create User Document in Firestore
         await setDoc(doc(db, "users", user.uid), {
             id: user.uid,
             username: username,
@@ -144,32 +127,25 @@ signupForm?.addEventListener('submit', async (e) => {
             notifications: []
         });
 
-        // Redirect to home
         window.location.href = '../index.html';
-
     } catch (error) {
-        console.error("Signup Error:", error);
-        if (error.code === 'auth/email-already-in-use') {
-            errorEl.innerText = '❌ Email already registered';
-        } else {
-            errorEl.innerText = '❌ ' + error.message;
-        }
+        console.error("Detailed Signup Error:", error);
+        submitBtn.innerText = 'Create Account';
+        submitBtn.disabled = false;
+        errorEl.innerText = '❌ ' + error.message;
     }
 });
 
-// Password toggle functionality
+// Password toggle
 document.querySelectorAll('.password-toggle').forEach(button => {
     button.addEventListener('click', () => {
         const targetId = button.getAttribute('data-target');
         const input = document.getElementById(targetId);
-
         if (input.type === 'password') {
             input.type = 'text';
-            button.classList.add('visible');
             button.innerText = '🙈';
         } else {
             input.type = 'password';
-            button.classList.remove('visible');
             button.innerText = '👁️';
         }
     });
