@@ -1,7 +1,7 @@
 // Admin Dashboard Logic - Real-time with Firebase
 import { auth, db } from "./firebase-config.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
-import { collection, onSnapshot, doc, updateDoc, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+import { collection, onSnapshot, doc, updateDoc, deleteDoc, query, orderBy, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
 let users = [];
 let currentUser = null;
@@ -13,16 +13,52 @@ onAuthStateChanged(auth, async (user) => {
         return;
     }
 
-    // Check if user is admin (requires fetching their doc or using custom claims)
-    // For simplicity, we check the 'users' collection
-    onSnapshot(doc(db, "users", user.uid), (snapshot) => {
+    console.log("Admin check for:", user.email);
+
+    // Subscribe to real-time user data
+    onSnapshot(doc(db, "users", user.uid), async (snapshot) => {
+        if (!snapshot.exists()) {
+            // AUTO-REPAIR: If this is the admin email, create the doc immediately
+            if (user.email === 'admin@gamestation.com') {
+                console.log("Admin doc missing, auto-repairing...");
+                const username = user.displayName || 'Admin';
+                await setDoc(doc(db, "users", user.uid), {
+                    id: user.uid,
+                    username: username,
+                    email: user.email,
+                    nickname: username,
+                    isAdmin: true,
+                    isOnline: true,
+                    createdAt: new Date().toISOString(),
+                    lastLogin: new Date().toISOString(),
+                    warnings: [],
+                    notifications: []
+                });
+                return; // Second snapshot will trigger the success path
+            } else {
+                console.warn("Non-admin or missing doc, redirecting...");
+                window.location.href = '../index.html';
+                return;
+            }
+        }
+
         const userData = snapshot.data();
         if (!userData || !userData.isAdmin) {
+            console.warn("User is not admin, redirecting...");
             window.location.href = '../index.html';
             return;
         }
+
+        console.log("Admin verified!");
         currentUser = userData;
         initDashboard();
+    }, (error) => {
+        console.error("Admin check failed:", error);
+        // If it's a permission error, it's likely because Firestore is disabled
+        if (error.code === 'permission-denied') {
+            alert("⚠️ Firestore Database not enabled. Please enable it in Firebase Console to use the Admin Dashboard.");
+            window.location.href = '../index.html';
+        }
     });
 });
 
@@ -33,6 +69,8 @@ function initDashboard() {
     onSnapshot(usersQuery, (snapshot) => {
         users = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         renderDashboard();
+    }, (error) => {
+        console.error("User list listener failed:", error);
     });
 }
 
@@ -48,7 +86,7 @@ function renderDashboard() {
         const tr = document.createElement('tr');
         const isSelf = user.id === auth.currentUser?.uid;
 
-        const isAdmin = user.isAdmin ? '<span class="badge-type admin">Admin</span>' : '<span class="badge-type user">User</span>';
+        const isAdminBadge = user.isAdmin ? '<span class="badge-type admin">Admin</span>' : '<span class="badge-type user">User</span>';
         const createdDate = user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A';
 
         // Real Online Status from Firestore
@@ -69,7 +107,7 @@ function renderDashboard() {
                     <div class="user-avatar" style="background-color: ${stringToColor(user.username || 'U')}">${(user.username || 'U')[0].toUpperCase()}</div>
                     <div class="user-info">
                         <span class="username">${user.username || 'Unknown'} ${isSelf ? '(You)' : ''}</span>
-                        ${isAdmin}
+                        ${isAdminBadge}
                     </div>
                 </div>
             </td>
@@ -94,13 +132,13 @@ function renderDashboard() {
     });
 
     // Update Stats
-    document.getElementById('totalUsers').innerText = users.length;
+    const totalUsersEl = document.getElementById('totalUsers');
+    if (totalUsersEl) totalUsersEl.innerText = users.length;
 
     const onlineStat = document.getElementById('onlineUsers');
     if (onlineStat) {
         onlineStat.innerText = onlineCount;
     } else {
-        // Create stat card if missing
         const statsOverview = document.querySelector('.stats-overview');
         if (statsOverview) {
             const statCard = document.createElement('div');
@@ -144,7 +182,6 @@ window.deleteUser = async (userId) => {
     }
 };
 
-// Helper for avatar color
 function stringToColor(str) {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
