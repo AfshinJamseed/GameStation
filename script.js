@@ -317,9 +317,10 @@ function setupGlobalNav(user) {
         </div>
     `;
 
-    // Path Fixing
+    // Reliable Path Fixing
     const path = window.location.pathname;
-    const rootPrefix = document.querySelector('.back-link') ? '../' : '';
+    const isInsideAuth = path.includes('/auth/');
+    const rootPrefix = isInsideAuth ? '../' : '';
 
     const brand = nav.querySelector('.nav-brand');
     const home = nav.querySelectorAll('.nav-link')[0];
@@ -335,9 +336,13 @@ function setupGlobalNav(user) {
         friends.href = rootPrefix + 'auth/friends.html';
         profile.href = rootPrefix + 'auth/profile.html';
         if (profileIcon) profileIcon.href = rootPrefix + 'auth/profile.html';
-        notifBtn.onclick = () => window.location.href = rootPrefix + 'notifications.html';
 
-        if (path.includes('/auth/')) {
+        // Ensure notifBtn always points to the correct root path
+        notifBtn.onclick = () => {
+            window.location.href = rootPrefix + 'notifications.html';
+        };
+
+        if (isInsideAuth) {
             friends.href = 'friends.html';
             profile.href = 'profile.html';
             if (profileIcon) profileIcon.href = 'profile.html';
