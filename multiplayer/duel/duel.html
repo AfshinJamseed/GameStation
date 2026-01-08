@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Duel | GameStation</title>
     <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../../modal.css">
     <link rel="stylesheet" href="duel-styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
@@ -20,9 +21,27 @@
         </nav>
 
         <div class="game-container">
+            <!-- Lobby Overlay -->
+            <div id="lobbyOverlay" class="lobby-overlay">
+                <div class="lobby-card">
+                    <h2>Space Duel Online</h2>
+                    <p>Select your battle mode</p>
+                    <div class="lobby-btns">
+                        <button class="btn btn-primary" id="hostBtn">Host Private Room</button>
+                        <button class="btn btn-secondary" id="joinBtn">Join with Code</button>
+                        <button class="btn btn-glass" id="localBtn">Local 2-Player</button>
+                    </div>
+                    <div id="roomCodeDisplay" class="room-code-display" style="display: none;">
+                        <p>Share this code with your friend:</p>
+                        <h1 id="roomCodeText">------</h1>
+                        <small>Waiting for opponent...</small>
+                    </div>
+                </div>
+            </div>
+
             <div class="duel-hud">
-                <div class="player-status">
-                    <div class="player-name">Player 1</div>
+                <div class="player-status" id="p1Status">
+                    <div class="player-name" id="p1Name">Player 1</div>
                     <div class="health-bar">
                         <div class="health-fill" id="p1Health"></div>
                     </div>
@@ -33,8 +52,8 @@
                     <span>⬇️ Gravity (G to flip)</span>
                 </div>
 
-                <div class="player-status">
-                    <div class="player-name">Player 2</div>
+                <div class="player-status" id="p2Status">
+                    <div class="player-name" id="p2Name">Player 2</div>
                     <div class="health-bar">
                         <div class="health-fill" id="p2Health"></div>
                     </div>
@@ -48,7 +67,9 @@
             <button class="btn btn-glass" id="resetBtn" style="display: none;">New Round</button>
         </div>
     </div>
-    <script src="duel.js"></script>
+
+    <script src="../../modal.js"></script>
+    <script type="module" src="duel.js"></script>
     <script type="module" src="../../script.js"></script>
 </body>
 
