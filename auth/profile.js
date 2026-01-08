@@ -1,11 +1,10 @@
-// Profile Page Logic - Firebase version
+// Profile Page Logic - Updated with Auto-Repair
 import { auth, db } from "./firebase-config.js";
 import { onAuthStateChanged, signOut, updatePassword, reauthenticateWithCredential, EmailAuthProvider, deleteUser } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
-import { doc, onSnapshot, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+import { doc, onSnapshot, updateDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
 let currentUserData = null;
 
-// Helper to show error on screen
 function showDbError(message) {
     const profileBox = document.querySelector('.profile-box');
     const existingError = document.getElementById('screenError');
@@ -13,8 +12,8 @@ function showDbError(message) {
 
     const errorDiv = document.createElement('div');
     errorDiv.id = 'screenError';
-    errorDiv.style.cssText = 'background: rgba(255, 0, 0, 0.2); color: #ff5252; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border: 1px solid #ff5252; font-size: 0.9rem;';
-    errorDiv.innerHTML = `<strong>⚠️ Database Issue:</strong> ${message}<br><br><small>Go to Firebase Console > Firestore Database > Click "Create Database" to fix this.</small>`;
+    errorDiv.style.cssText = 'background: rgba(255, 0, 0, 0.2); color: #ff5252; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border: 1px solid #ff5252; font-size: 0.9rem; text-align: center;';
+    errorDiv.innerHTML = `<strong>⚠️ Database Setup Needed</strong><br>${message}<br><br><small>Final Step: Go to <b>Firebase Console > Firestore Database</b> and click <b>"Create Database"</b>.</small>`;
     profileBox.insertBefore(errorDiv, profileBox.firstChild);
 }
 
@@ -25,32 +24,48 @@ onAuthStateChanged(auth, (user) => {
         return;
     }
 
-    // Subscribe to real-time user data
-    try {
-        onSnapshot(doc(db, "users", user.uid), (snapshot) => {
-            if (!snapshot.exists()) {
-                console.error("User document missing!");
-                showDbError("Your profile data hasn't been created yet. This usually happens if the database is disabled.");
-                return;
-            }
-            // Clear any previous error if data arrived
-            const err = document.getElementById('screenError');
-            if (err) err.remove();
+    const userRef = doc(db, "users", user.uid);
 
-            currentUserData = snapshot.data();
-            renderProfile();
-        }, (error) => {
-            console.error("Firestore error:", error);
-            if (error.code === 'permission-denied') {
-                showDbError("Firestore Database is not enabled or permission is denied.");
-            } else {
-                showDbError(error.message);
+    // Subscribe to real-time user data
+    onSnapshot(userRef, async (snapshot) => {
+        if (!snapshot.exists()) {
+            console.warn("User document missing, attempting auto-repair...");
+
+            // AUTO-REPAIR: If the DB was just enabled, let's create the missing user data
+            try {
+                const username = user.displayName || user.email.split('@')[0];
+                await setDoc(userRef, {
+                    id: user.uid,
+                    username: username,
+                    email: user.email,
+                    nickname: username,
+                    isAdmin: user.email === 'admin@gamestation.com',
+                    isOnline: true,
+                    createdAt: new Date().toISOString(),
+                    lastLogin: new Date().toISOString(),
+                    warnings: [],
+                    notifications: []
+                });
+                console.log("Auto-repair successful!");
+            } catch (err) {
+                console.error("Auto-repair failed:", err);
+                showDbError("Could not save your profile. Make sure Firestore is enabled in Test Mode.");
             }
-        });
-    } catch (err) {
-        console.error("Snapshot setup failed:", err);
-        showDbError("Failed to connect to the database.");
-    }
+            return;
+        }
+
+        // Data received successfully
+        const err = document.getElementById('screenError');
+        if (err) err.remove();
+
+        currentUserData = snapshot.data();
+        renderProfile();
+    }, (error) => {
+        console.error("Firestore Error:", error);
+        if (error.code === 'permission-denied' || error.message.includes('not exist')) {
+            showDbError("Firestore is not enabled yet.");
+        }
+    });
 });
 
 function renderProfile() {
@@ -88,10 +103,22 @@ function renderProfile() {
     document.getElementById('nicknameInput').value = currentUserData.nickname || currentUserData.username;
 }
 
-// ... the rest of the file (Logout, Password change, Delete) remains the same ...
-// [Note: I'm keeping the rest of the functions from the previous implementation]
-// Handle profile update
-document.getElementById('profileForm').addEventListener('submit', async (e) => {
+// Logout
+document.getElementById('logoutBtn')?.addEventListener('click', async () => {
+    const confirmed = await Modal.confirm('Are you sure you want to logout?', 'Logout Confirmation');
+    if (confirmed) {
+        try {
+            if (auth.currentUser) {
+                await updateDoc(doc(db, "users", auth.currentUser.uid), { isOnline: false });
+            }
+        } catch (e) { }
+        await signOut(auth);
+        window.location.href = '../index.html';
+    }
+});
+
+// Other handlers (Password, Update)
+document.getElementById('profileForm')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const newNickname = document.getElementById('nicknameInput').value.trim();
     if (newNickname.length < 2) return;
@@ -114,27 +141,5 @@ document.getElementById('changePasswordBtn')?.addEventListener('click', async ()
         if (!newPass) return;
         await updatePassword(user, newPass);
         await Modal.alert('✅ Password changed successfully!', 'Success');
-    } catch (error) { await Modal.alert('❌ Error changing password.', 'Error'); }
-});
-
-document.getElementById('logoutBtn')?.addEventListener('click', async () => {
-    const confirmed = await Modal.confirm('Are you sure you want to logout?', 'Logout Confirmation');
-    if (confirmed) {
-        try { await updateDoc(doc(db, "users", auth.currentUser.uid), { isOnline: false }); } catch (e) { }
-        await signOut(auth);
-        window.location.href = '../index.html';
-    }
-});
-
-document.getElementById('deleteAccountBtn')?.addEventListener('click', async () => {
-    const confirmation = await Modal.prompt('Type "DELETE" to confirm permanent deletion:', '', 'Delete Account');
-    if (confirmation === 'DELETE') {
-        try {
-            const user = auth.currentUser;
-            const uid = user.uid;
-            await deleteDoc(doc(db, "users", uid));
-            await deleteUser(user);
-            window.location.href = '../index.html';
-        } catch (error) { await Modal.alert('❌ Error. Try relogging before deletion.', 'Error'); }
-    }
+    } catch (error) { await Modal.alert('❌ Error. Check your connection.', 'Error'); }
 });
