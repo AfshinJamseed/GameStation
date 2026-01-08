@@ -292,6 +292,7 @@ function setupGlobalNav(user) {
     let navContentRight = '';
     if (user) {
         navContentRight = `
+            <a href='auth/friends.html' class='nav-link'>Friends</a>
             <a href='auth/profile.html' class='nav-link'>Profile</a>
             <div class='nav-icon-container'>
                 <a href='auth/profile.html' class='nav-icon-btn mobile-only' title='Profile'>👤</a>
@@ -326,15 +327,18 @@ function setupGlobalNav(user) {
     home.href = rootPrefix + 'index.html';
 
     if (user) {
-        const profile = nav.querySelectorAll('.nav-link')[1];
+        const friends = nav.querySelectorAll('.nav-link')[1];
+        const profile = nav.querySelectorAll('.nav-link')[2];
         const profileIcon = nav.querySelector('.nav-icon-btn[title="Profile"]');
         const notifBtn = nav.querySelector('#globalNotifBtn');
 
+        friends.href = rootPrefix + 'auth/friends.html';
         profile.href = rootPrefix + 'auth/profile.html';
         if (profileIcon) profileIcon.href = rootPrefix + 'auth/profile.html';
         notifBtn.onclick = () => window.location.href = rootPrefix + 'notifications.html';
 
         if (path.includes('/auth/')) {
+            friends.href = 'friends.html';
             profile.href = 'profile.html';
             if (profileIcon) profileIcon.href = 'profile.html';
         }
