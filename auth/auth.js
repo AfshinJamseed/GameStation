@@ -1,4 +1,4 @@
-// Authentication System - Simplified with Debugging
+// Authentication System - Robust Version with Error Catching
 import { auth, db } from "./firebase-config.js";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 import { doc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
@@ -31,32 +31,9 @@ signupTab.addEventListener('click', () => {
     authSubtitle.innerText = 'Create your account';
 });
 
-// Password strength indicator
-const signupPassword = document.getElementById('signupPassword');
-const strengthIndicator = document.getElementById('passwordStrength');
-
-if (signupPassword) {
-    signupPassword.addEventListener('input', (e) => {
-        const password = e.target.value;
-        let strength = 0;
-        if (password.length >= 6) strength++;
-        if (password.length >= 10) strength++;
-        if (/[A-Z]/.test(password)) strength++;
-        if (/[0-9]/.test(password)) strength++;
-        if (/[^A-Za-z0-9]/.test(password)) strength++;
-
-        strengthIndicator.className = 'password-strength';
-        if (strength <= 2) strengthIndicator.classList.add('weak');
-        else if (strength <= 4) strengthIndicator.classList.add('medium');
-        else strengthIndicator.classList.add('strong');
-    });
-}
-
 // Handle Login
 loginForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    console.log("Attempting login...");
-
     const identifier = document.getElementById('loginIdentifier').value.trim();
     const password = document.getElementById('loginPassword').value;
     const errorEl = document.getElementById('loginError');
@@ -70,26 +47,34 @@ loginForm?.addEventListener('submit', async (e) => {
         const userCredential = await signInWithEmailAndPassword(auth, identifier, password);
         const user = userCredential.user;
 
-        // Update Online Status
-        await updateDoc(doc(db, "users", user.uid), {
-            isOnline: true,
-            lastLogin: new Date().toISOString()
-        });
+        // Try to update status, but don't hang if database is disabled
+        try {
+            await updateDoc(doc(db, "users", user.uid), {
+                isOnline: true,
+                lastLogin: new Date().toISOString()
+            });
+        } catch (dbError) {
+            console.error("Database update failed:", dbError);
+            // We can still redirect them even if the online status update fails
+        }
 
         window.location.href = '../index.html';
     } catch (error) {
-        console.error("Detailed Login Error:", error);
+        console.error("Login Error:", error);
         submitBtn.innerText = 'Sign In';
         submitBtn.disabled = false;
-        errorEl.innerText = '❌ ' + error.message;
+
+        if (error.code === 'permission-denied') {
+            errorEl.innerText = '❌ Database Error: Please enable Firestore in Firebase Console.';
+        } else {
+            errorEl.innerText = '❌ ' + (error.message || 'Login failed. Check your connection.');
+        }
     }
 });
 
 // Handle Signup
 signupForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    console.log("Attempting signup...");
-
     const username = document.getElementById('signupUsername').value.trim();
     const email = document.getElementById('signupEmail').value.trim();
     const password = document.getElementById('signupPassword').value;
@@ -114,29 +99,37 @@ signupForm?.addEventListener('submit', async (e) => {
 
         const isAdmin = email === 'admin@gamestation.com';
 
-        await setDoc(doc(db, "users", user.uid), {
-            id: user.uid,
-            username: username,
-            email: email,
-            nickname: username,
-            isAdmin: isAdmin,
-            isOnline: true,
-            createdAt: new Date().toISOString(),
-            lastLogin: new Date().toISOString(),
-            warnings: [],
-            notifications: []
-        });
+        // Attempting to create user document
+        try {
+            await setDoc(doc(db, "users", user.uid), {
+                id: user.uid,
+                username: username,
+                email: email,
+                nickname: username,
+                isAdmin: isAdmin,
+                isOnline: true,
+                createdAt: new Date().toISOString(),
+                lastLogin: new Date().toISOString(),
+                warnings: [],
+                notifications: []
+            });
+        } catch (dbError) {
+            console.error("Database setup failed:", dbError);
+            if (dbError.code === 'permission-denied') {
+                throw new Error("Database Error: Firestore is not enabled. Please check Firebase Console.");
+            }
+        }
 
         window.location.href = '../index.html';
     } catch (error) {
-        console.error("Detailed Signup Error:", error);
+        console.error("Signup Error:", error);
         submitBtn.innerText = 'Create Account';
         submitBtn.disabled = false;
         errorEl.innerText = '❌ ' + error.message;
     }
 });
 
-// Password toggle
+// Password toggle and other UI code...
 document.querySelectorAll('.password-toggle').forEach(button => {
     button.addEventListener('click', () => {
         const targetId = button.getAttribute('data-target');
