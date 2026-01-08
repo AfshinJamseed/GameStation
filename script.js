@@ -317,18 +317,17 @@ function setupGlobalNav(user) {
         </div>
     `;
 
-
-
     // Robust Dynamic Root Path Calculation
-    const path = window.location.pathname;
-    let cleanPath = path.split('?')[0].split('#')[0];
-    if (cleanPath.endsWith('/')) cleanPath = cleanPath.slice(0, -1);
-    const parts = cleanPath.split('/').filter(p => p !== '' && !p.includes('.html'));
-    const depth = parts.length;
+    const fullPath = window.location.pathname;
+    let cleanPath = fullPath.split('?')[0].split('#')[0];
+    if (cleanPath.endsWith('/') && cleanPath.length > 1) cleanPath = cleanPath.slice(0, -1);
+    const segments = cleanPath.split('/').filter(s => s !== '');
+    let depth = segments.length;
+    if (segments.length > 0 && (segments[segments.length - 1].includes('.html') || segments[segments.length - 1].includes('.js'))) depth -= 1;
     let rootPrefix = '';
     for (let i = 0; i < depth; i++) rootPrefix += '../';
+    if (rootPrefix === '') rootPrefix = './';
 
-    // Hide manual user indicator from index.html if present
     const userIndicator = document.getElementById('userIndicator');
     if (userIndicator) userIndicator.style.display = 'none';
 
@@ -337,7 +336,7 @@ function setupGlobalNav(user) {
     brand.href = rootPrefix + 'index.html';
     home.href = rootPrefix + 'index.html';
 
-    const isInsideAuth = path.includes('/auth/');
+    const isInsideAuth = fullPath.includes('/auth/');
 
     if (user) {
         const friends = nav.querySelectorAll('.nav-link')[1];
@@ -364,7 +363,7 @@ function setupGlobalNav(user) {
         const loginIcon = nav.querySelector('.nav-icon-btn[title="Login"]');
         loginBtn.href = rootPrefix + 'auth/login.html';
         if (loginIcon) loginIcon.href = rootPrefix + 'auth/login.html';
-        if (path.includes('/auth/')) {
+        if (fullPath.includes('/auth/')) {
             loginBtn.href = 'login.html';
             if (loginIcon) loginIcon.href = 'login.html';
         }

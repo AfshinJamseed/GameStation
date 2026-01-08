@@ -57,3 +57,68 @@
     display: block;
     margin: 0 auto;
 }
+
+/* Lobby Overlay */
+.lobby-overlay {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 80px);
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+.lobby-box {
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 0 50px rgba(0, 243, 255, 0.2);
+}
+
+.lobby-title {
+    font-size: 2rem;
+    color: var(--accent-cyan);
+    margin-bottom: 10px;
+}
+
+.lobby-subtitle {
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+}
+
+.lobby-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.room-code-area {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px dashed var(--accent-cyan);
+}
+
+.room-code-text {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 5px;
+    color: var(--accent-cyan);
+    margin: 15px 0;
+}
+
+.small-text {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}

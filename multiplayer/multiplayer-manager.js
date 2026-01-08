@@ -9,7 +9,12 @@ import {
     getDoc,
     serverTimestamp,
     collection,
-    addDoc
+    addDoc,
+    query,
+    where,
+    getDocs,
+    limit,
+    arrayUnion
 } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
 /**
@@ -20,8 +25,16 @@ export class MultiplayerManager {
         this.gameId = gameId; // Name of the game (e.g., 'duel')
         this.roomRef = null;
         this.roomId = null;
+        this.roomCode = null;
         this.isHost = false;
         this.onUpdateCallback = null;
+    }
+
+    /**
+     * Generate a user-friendly 6-character room code
+     */
+    generateRoomCode() {
+        return Math.random().toString(36).substring(2, 8).toUpperCase();
     }
 
     /**
@@ -29,23 +42,26 @@ export class MultiplayerManager {
      */
     async createRoom(hostData) {
         try {
+            const roomCode = this.generateRoomCode();
             const roomData = {
                 game: this.gameId,
+                roomCode: roomCode,
                 host: hostData,
                 guest: null,
                 state: 'lobby', // lobby, playing, finished
                 gameState: {},
                 lastUpdate: serverTimestamp(),
-                events: [] // Temporary events like 'shoot'
+                events: []
             };
 
             const docRef = await addDoc(collection(db, "rooms"), roomData);
             this.roomId = docRef.id;
+            this.roomCode = roomCode;
             this.roomRef = docRef;
             this.isHost = true;
 
             this.listenToRoom();
-            return this.roomId;
+            return this.roomCode;
         } catch (error) {
             console.error("Failed to create room:", error);
             throw error;
@@ -53,15 +69,27 @@ export class MultiplayerManager {
     }
 
     /**
-     * Join an existing match room
+     * Join an existing match room using a 6-character room code
      */
-    async joinRoom(roomId, guestData) {
+    async joinRoom(roomCode, guestData) {
         try {
-            const docRef = doc(db, "rooms", roomId);
-            const snap = await getDoc(docRef);
+            const q = query(
+                collection(db, "rooms"),
+                where("roomCode", "==", roomCode.toUpperCase()),
+                where("game", "==", this.gameId),
+                where("state", "==", "lobby"),
+                limit(1)
+            );
 
-            if (!snap.exists()) throw new Error("Room not found");
-            const data = snap.data();
+            const querySnapshot = await getDocs(q);
+            if (querySnapshot.empty) {
+                throw new Error("Room not found or already started");
+            }
+
+            const roomDoc = querySnapshot.docs[0];
+            const docRef = roomDoc.ref;
+            const data = roomDoc.data();
+
             if (data.guest) throw new Error("Room is full");
 
             await updateDoc(docRef, {
@@ -70,7 +98,8 @@ export class MultiplayerManager {
                 lastUpdate: serverTimestamp()
             });
 
-            this.roomId = roomId;
+            this.roomId = roomDoc.id;
+            this.roomCode = roomCode.toUpperCase();
             this.roomRef = docRef;
             this.isHost = false;
 
@@ -88,7 +117,6 @@ export class MultiplayerManager {
     async updateGameState(state) {
         if (!this.roomRef) return;
         try {
-            // Only update if playing or finished
             await updateDoc(this.roomRef, {
                 gameState: state,
                 lastUpdate: serverTimestamp()
@@ -103,8 +131,6 @@ export class MultiplayerManager {
      */
     async sendEvent(event) {
         if (!this.roomRef) return;
-        // In this simple version, we add events to an array
-        // In a high-perf version we'd use separate docs
         await updateDoc(this.roomRef, {
             events: arrayUnion(event)
         });
@@ -133,7 +159,9 @@ export class MultiplayerManager {
 
     async closeRoom() {
         if (this.roomRef) {
-            await deleteDoc(this.roomRef);
+            try {
+                await deleteDoc(this.roomRef);
+            } catch (e) { }
             this.roomRef = null;
         }
     }

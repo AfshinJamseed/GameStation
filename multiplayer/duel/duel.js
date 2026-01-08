@@ -76,8 +76,8 @@ hostBtn.addEventListener('click', async () => {
     p1NameEl.innerText = name + ' (You)';
 
     try {
-        const roomId = await mpManager.createRoom({ name, uid: user?.uid });
-        roomCodeText.innerText = roomId.slice(-6).toUpperCase();
+        const roomCode = await mpManager.createRoom({ name, uid: user?.uid });
+        roomCodeText.innerText = roomCode;
         roomCodeDisplay.style.display = 'block';
         hostBtn.disabled = true;
         joinBtn.disabled = true;
@@ -92,8 +92,6 @@ hostBtn.addEventListener('click', async () => {
             if (room.gameState && !isHost) {
                 syncFromHost(room.gameState);
             }
-            // If we are host, we listen for guest inputs (in a more advanced version)
-            // For now, Guest sends their position, Host sends everything else
             if (room.gameState && isHost) {
                 syncGuestOnly(room.gameState);
             }
@@ -104,7 +102,7 @@ hostBtn.addEventListener('click', async () => {
 });
 
 joinBtn.addEventListener('click', async () => {
-    const code = prompt("Enter Room ID (exact):");
+    const code = prompt("Enter 6-digit Room Code:");
     if (!code) return;
 
     gameMode = 'online';
@@ -226,8 +224,6 @@ function syncFromHost(state) {
     player1.angle = state.p1.angle;
     player1.health = state.p1.health;
 
-    // Guest only syncs P2 if they aren't controlling it (but they are)
-    // Actually, Guest sends their P2 to Host, Host sends everything back
     if (!isHost) {
         player2.health = state.p2.health;
     }
