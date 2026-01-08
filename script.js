@@ -254,13 +254,22 @@ function createBlackHoles(container) {
 /* --- Global Navigation & Notifications (Firebase Version) --- */
 import { auth, db } from "./auth/firebase-config.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
-import { doc, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+import { doc, onSnapshot, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
 // Initialize nav on auth state change
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
     setupGlobalNav(user);
     if (user) {
         updateNotificationBadge(user.uid);
+
+        // Ensure user is marked as online when active
+        try {
+            updateDoc(doc(db, "users", user.uid), {
+                isOnline: true,
+                lastSeen: new Date().toISOString()
+            }).catch(() => { }); // Ignore errors if DB is disabled
+        } catch (e) { }
+
         if (window.location.pathname.includes('notifications.html')) {
             renderNotificationsPage(user.uid);
         }
@@ -362,24 +371,29 @@ function updateNotificationBadge(uid) {
     });
 }
 
-/* Helper to send notification */
-window.sendNotification = function (targetUserId, message, type = 'info') {
-    const users = JSON.parse(localStorage.getItem('gamestation_users') || '[]');
-    const userIndex = users.findIndex(u => u.id === targetUserId);
+/* Helper to send notification (Firestore Version) */
+window.sendNotification = async function (targetUserId, message, type = 'info') {
+    try {
+        const userRef = doc(db, "users", targetUserId);
+        const snapshot = await getDoc(userRef);
 
-    if (userIndex !== -1) {
-        if (!users[userIndex].notifications) users[userIndex].notifications = [];
+        if (snapshot.exists()) {
+            const userData = snapshot.data();
+            const notifications = userData.notifications || [];
 
-        users[userIndex].notifications.unshift({
-            id: Date.now(),
-            message: message,
-            date: new Date().toISOString(),
-            type: type,
-            read: false
-        });
+            notifications.unshift({
+                id: Date.now(),
+                message: message,
+                date: new Date().toISOString(),
+                type: type,
+                read: false
+            });
 
-        localStorage.setItem('gamestation_users', JSON.stringify(users));
-        console.log('Notification sent to ' + targetUserId);
+            await updateDoc(userRef, { notifications: notifications.slice(0, 50) }); // Keep last 50
+            console.log('Notification sent to ' + targetUserId);
+        }
+    } catch (error) {
+        console.error("Failed to send notification:", error);
     }
 };
 
