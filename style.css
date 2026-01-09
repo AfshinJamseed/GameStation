@@ -51,12 +51,6 @@ body {
         radial-gradient(circle at 90% 80%, rgba(0, 243, 255, 0.1) 0%, transparent 20%);
 }
 
-body.game-mode {
-    height: 100vh;
-    height: 100dvh;
-    overflow: hidden;
-}
-
 /* Typography */
 h1,
 h2,
@@ -74,13 +68,6 @@ h3 {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
-}
-
-body.game-mode .container {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem 2rem;
 }
 
 .btn {
@@ -185,7 +172,6 @@ body.game-mode .container {
     background: linear-gradient(to right, #fff, var(--accent-cyan));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 
 .hub-subtitle {
@@ -532,12 +518,6 @@ body.game-mode .container {
     min-height: 60vh;
 }
 
-body.game-mode .game-container {
-    height: 100%;
-    min-height: 0;
-    justify-content: space-evenly;
-}
-
 .status-text {
     font-size: 2rem;
     margin-bottom: 2rem;
@@ -555,13 +535,6 @@ body.game-mode .game-container {
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
 }
 
-body.game-mode .board {
-    gap: 1.5vmin;
-    padding: 1.5vmin;
-    max-height: 65vh;
-    aspect-ratio: 1;
-}
-
 .cell {
     width: 100px;
     height: 100px;
@@ -575,14 +548,6 @@ body.game-mode .board {
     cursor: pointer;
     transition: all 0.3s ease;
     user-select: none;
-}
-
-body.game-mode .cell {
-    width: 20vmin;
-    height: 20vmin;
-    max-width: 100px;
-    max-height: 100px;
-    font-size: 8vmin;
 }
 
 .cell:hover {
@@ -607,12 +572,6 @@ body.game-mode .cell {
 }
 
 /* Snake Canvas */
-canvas {
-    max-width: 90vw;
-    max-height: 60vh;
-    object-fit: contain;
-}
-
 canvas#snakeCanvas {
     background: rgba(0, 0, 0, 0.3);
     border: 2px solid var(--glass-border);

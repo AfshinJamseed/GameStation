@@ -11,66 +11,66 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 
+<body>
+    <div class="container">
+        <nav class="nav-bar">
+            <a href="../index.html" class="back-link">
+                <span>←</span> Back to Multiplayer
+            </a>
+            <h3 id="duelTitle">Space Duel</h3>
+        </nav>
 
-<div class="container">
-    <nav class="nav-bar">
-        <a href="../index.html" class="back-link">
-            <span>←</span> Back to Multiplayer
-        </a>
-        <h3 id="duelTitle">Space Duel</h3>
-    </nav>
-
-    <div class="game-container">
-        <!-- Lobby Overlay -->
-        <div id="lobbyOverlay" class="lobby-overlay">
-            <div class="lobby-card">
-                <h2>Space Duel Online</h2>
-                <p>Select your battle mode</p>
-                <div class="lobby-btns">
-                    <button class="btn btn-primary" id="hostBtn">Host Private Room</button>
-                    <button class="btn btn-secondary" id="joinBtn">Join with Code</button>
-                    <button class="btn btn-glass" id="localBtn">Local 2-Player</button>
-                </div>
-                <div id="roomCodeDisplay" class="room-code-display" style="display: none;">
-                    <p>Share this code with your friend:</p>
-                    <h1 id="roomCodeText">------</h1>
-                    <small>Waiting for opponent...</small>
+        <div class="game-container">
+            <!-- Lobby Overlay -->
+            <div id="lobbyOverlay" class="lobby-overlay">
+                <div class="lobby-card">
+                    <h2>Space Duel Online</h2>
+                    <p>Select your battle mode</p>
+                    <div class="lobby-btns">
+                        <button class="btn btn-primary" id="hostBtn">Host Private Room</button>
+                        <button class="btn btn-secondary" id="joinBtn">Join with Code</button>
+                        <button class="btn btn-glass" id="localBtn">Local 2-Player</button>
+                    </div>
+                    <div id="roomCodeDisplay" class="room-code-display" style="display: none;">
+                        <p>Share this code with your friend:</p>
+                        <h1 id="roomCodeText">------</h1>
+                        <small>Waiting for opponent...</small>
+                    </div>
                 </div>
             </div>
+
+            <div class="duel-hud">
+                <div class="player-status" id="p1Status">
+                    <div class="player-name" id="p1Name">Player 1</div>
+                    <div class="health-bar">
+                        <div class="health-fill" id="p1Health"></div>
+                    </div>
+                    <div class="controls-hint">WASD + Space</div>
+                </div>
+
+                <div class="gravity-indicator" id="gravityIndicator">
+                    <span>⬇️ Gravity (G to flip)</span>
+                </div>
+
+                <div class="player-status" id="p2Status">
+                    <div class="player-name" id="p2Name">Player 2</div>
+                    <div class="health-bar">
+                        <div class="health-fill" id="p2Health"></div>
+                    </div>
+                    <div class="controls-hint">Arrows + Enter</div>
+                </div>
+            </div>
+
+            <canvas id="duelCanvas"></canvas>
+
+            <div class="game-message" id="gameMessage" style="display: none;"></div>
+            <button class="btn btn-glass" id="resetBtn" style="display: none;">New Round</button>
         </div>
-
-        <div class="duel-hud">
-            <div class="player-status" id="p1Status">
-                <div class="player-name" id="p1Name">Player 1</div>
-                <div class="health-bar">
-                    <div class="health-fill" id="p1Health"></div>
-                </div>
-                <div class="controls-hint">WASD + Space</div>
-            </div>
-
-            <div class="gravity-indicator" id="gravityIndicator">
-                <span>⬇️ Gravity (G to flip)</span>
-            </div>
-
-            <div class="player-status" id="p2Status">
-                <div class="player-name" id="p2Name">Player 2</div>
-                <div class="health-bar">
-                    <div class="health-fill" id="p2Health"></div>
-                </div>
-                <div class="controls-hint">Arrows + Enter</div>
-            </div>
-        </div>
-
-        <canvas id="duelCanvas"></canvas>
-
-        <div class="game-message" id="gameMessage" style="display: none;"></div>
-        <button class="btn btn-glass" id="resetBtn" style="display: none;">New Round</button>
     </div>
-</div>
 
-<script src="../../modal.js"></script>
-<script type="module" src="duel.js"></script>
-<script type="module" src="../../script.js"></script>
+    <script src="../../modal.js"></script>
+    <script type="module" src="duel.js"></script>
+    <script type="module" src="../../script.js"></script>
 </body>
 
 </html>

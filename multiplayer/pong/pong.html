@@ -10,50 +10,50 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 
-
-<div class="container">
-    <!-- Lobby Overlay -->
-    <div id="lobbyOverlay" class="lobby-overlay">
-        <div class="lobby-box">
-            <h2 class="lobby-title">Neon Pong Online</h2>
-            <p class="lobby-subtitle">Select your battle mode</p>
-            <div class="lobby-actions">
-                <button id="hostBtn" class="btn btn-primary">Host Private Room</button>
-                <button id="joinBtn" class="btn btn-secondary">Join with Code</button>
-                <button id="localBtn" class="btn btn-glass">Local 2-Player</button>
-            </div>
-            <div id="roomCodeDisplay" class="room-code-area" style="display: none;">
-                <p>Share this code with your friend:</p>
-                <div class="room-code-text" id="roomCodeText">------</div>
-                <p class="small-text">Waiting for opponent to connect...</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="game-container">
-        <div class="pong-info">
-            <div class="player-score">
-                <span class="player-label" id="p1Name">Player 1 (W/S)</span>
-                <span class="score-big" id="player1Score">0</span>
-            </div>
-            <div class="vs-divider">VS</div>
-            <div class="player-score">
-                <span class="player-label" id="p2Name">Player 2 (↑/↓)</span>
-                <span class="score-big" id="player2Score">0</span>
+<body>
+    <div class="container">
+        <!-- Lobby Overlay -->
+        <div id="lobbyOverlay" class="lobby-overlay">
+            <div class="lobby-box">
+                <h2 class="lobby-title">Neon Pong Online</h2>
+                <p class="lobby-subtitle">Select your battle mode</p>
+                <div class="lobby-actions">
+                    <button id="hostBtn" class="btn btn-primary">Host Private Room</button>
+                    <button id="joinBtn" class="btn btn-secondary">Join with Code</button>
+                    <button id="localBtn" class="btn btn-glass">Local 2-Player</button>
+                </div>
+                <div id="roomCodeDisplay" class="room-code-area" style="display: none;">
+                    <p>Share this code with your friend:</p>
+                    <div class="room-code-text" id="roomCodeText">------</div>
+                    <p class="small-text">Waiting for opponent to connect...</p>
+                </div>
             </div>
         </div>
 
-        <canvas id="pongCanvas"></canvas>
+        <div class="game-container">
+            <div class="pong-info">
+                <div class="player-score">
+                    <span class="player-label" id="p1Name">Player 1 (W/S)</span>
+                    <span class="score-big" id="player1Score">0</span>
+                </div>
+                <div class="vs-divider">VS</div>
+                <div class="player-score">
+                    <span class="player-label" id="p2Name">Player 2 (↑/↓)</span>
+                    <span class="score-big" id="player2Score">0</span>
+                </div>
+            </div>
 
-        <div class="game-message" id="gameMessage">Press SPACE to Start</div>
-        <button class="btn btn-glass" id="resetBtn" style="display: none;">New Game</button>
+            <canvas id="pongCanvas"></canvas>
+
+            <div class="game-message" id="gameMessage">Press SPACE to Start</div>
+            <button class="btn btn-glass" id="resetBtn" style="display: none;">New Game</button>
+        </div>
     </div>
-</div>
 
-<!-- Modals -->
-<script src="../../modal.js"></script>
-<script type="module" src="pong.js"></script>
-<script type="module" src="../../script.js"></script>
+    <!-- Modals -->
+    <script src="../../modal.js"></script>
+    <script type="module" src="pong.js"></script>
+    <script type="module" src="../../script.js"></script>
 </body>
 
 </html>
