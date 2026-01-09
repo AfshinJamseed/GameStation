@@ -44,7 +44,7 @@ body.light-theme .connect-board {
 body {
     background-color: var(--bg-color);
     color: var(--text-primary);
-    min-height: 100vh;
+    height: 100vh;
     overflow-x: hidden;
     background-image:
         radial-gradient(circle at 10% 20%, rgba(188, 19, 254, 0.1) 0%, transparent 20%),
