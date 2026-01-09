@@ -63,3 +63,51 @@
     display: block;
     margin: 0 auto;
 }
+
+/* Touch Controls */
+.touch-controls {
+    display: none;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.flip-btn {
+    width: 100px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(0, 150, 243, 0.5);
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    backdrop-filter: blur(4px);
+    touch-action: manipulation;
+    user-select: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.flip-btn.p1 {
+    border-color: rgba(0, 217, 255, 0.6);
+}
+
+.flip-btn.p2 {
+    border-color: rgba(255, 0, 255, 0.6);
+}
+
+.flip-btn:active {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(0.95);
+}
+
+@media (max-width: 1024px) {
+    .touch-controls {
+        display: flex;
+    }
+
+    .controls-hint {
+        display: none;
+    }
+}

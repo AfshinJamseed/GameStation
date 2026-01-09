@@ -10,6 +10,20 @@ let board = [];
 let currentPlayer = 1;
 let gameActive = true;
 
+// Keyboard support
+window.addEventListener('keydown', (e) => {
+    // Prevent scrolling
+    if (['Arrow Up', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
+        e.preventDefault();
+    }
+
+    // Number keys 1-7 for columns
+    const num = parseInt(e.key);
+    if (num >= 1 && num <= 7) {
+        dropDisc(num - 1);
+    }
+});
+
 function initBoard() {
     board = Array(ROWS).fill(null).map(() => Array(COLS).fill(0));
     boardEl.innerHTML = '';
@@ -156,6 +170,15 @@ function endGame(message) {
 }
 
 resetBtn.addEventListener('click', initBoard);
+
+// Touch Controls
+document.querySelectorAll('.col-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const col = parseInt(btn.getAttribute('data-col'));
+        dropDisc(col);
+    });
+});
 
 // Initialize
 initBoard();

@@ -71,6 +71,12 @@ const keys = {};
 
 window.addEventListener('keydown', (e) => {
     keys[e.key.toLowerCase()] = true;
+
+    // Prevent scrolling for game controls
+    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
+        e.preventDefault();
+    }
+
     if (e.key === ' ' && !gameRunning && gameMode === 'local') {
         startGame();
     }
@@ -78,6 +84,29 @@ window.addEventListener('keydown', (e) => {
 
 window.addEventListener('keyup', (e) => {
     keys[e.key.toLowerCase()] = false;
+});
+
+// Touch Controls
+document.addEventListener('DOMContentLoaded', () => {
+    const touchButtons = document.querySelectorAll('.t-btn');
+
+    touchButtons.forEach(btn => {
+        const keyCode = btn.getAttribute('data-key');
+
+        ['touchstart', 'mousedown'].forEach(eventType => {
+            btn.addEventListener(eventType, (e) => {
+                e.preventDefault();
+                keys[keyCode] = true;
+            });
+        });
+
+        ['touchend', 'mouseup', 'touchcancel'].forEach(eventType => {
+            btn.addEventListener(eventType, (e) => {
+                e.preventDefault();
+                keys[keyCode] = false;
+            });
+        });
+    });
 });
 
 // --- Lobby Logic ---

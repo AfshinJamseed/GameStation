@@ -105,3 +105,38 @@
     display: block;
     margin: 0 auto;
 }
+
+/* Touch Controls */
+.touch-controls {
+    display: none;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.col-btn {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 150, 0, 0.5);
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    backdrop-filter: blur(4px);
+    touch-action: manipulation;
+    user-select: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.col-btn:active {
+    background: rgba(255, 150, 0, 0.4);
+    transform: scale(0.95);
+}
+
+@media (max-width: 1024px) {
+    .touch-controls {
+        display: flex;
+    }
+}

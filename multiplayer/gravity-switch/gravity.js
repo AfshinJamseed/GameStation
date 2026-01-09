@@ -91,6 +91,11 @@ const keys = {};
 window.addEventListener('keydown', (e) => {
     if (!gameActive) return;
 
+    // Prevent scrolling
+    if ([' Arrow', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
+        e.preventDefault();
+    }
+
     if (e.key.toLowerCase() === 'q' && !keys['q']) {
         player1.gravityFlipped = !player1.gravityFlipped;
         player1.onGround = false;
@@ -111,6 +116,19 @@ window.addEventListener('keyup', (e) => {
 });
 
 resetBtn.addEventListener('click', resetGame);
+
+// Touch Controls
+document.querySelectorAll('.flip-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (!gameActive) return;
+
+        const player = btn.getAttribute('data-player') === '1' ? player1 : player2;
+        player.gravityFlipped = !player.gravityFlipped;
+        player.onGround = false;
+        player.vy = 0;
+    });
+});
 
 function updateGravityDisplay() {
     const p1Gravity = player1.gravityFlipped ? '⬆️' : '⬇️';

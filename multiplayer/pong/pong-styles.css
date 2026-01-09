@@ -122,3 +122,58 @@
     font-size: 0.8rem;
     color: var(--text-secondary);
 }
+
+/* Touch Controls */
+.touch-controls {
+    display: none;
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    padding: 0 30px;
+    justify-content: space-between;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.p1-touch,
+.p2-touch {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    pointer-events: auto;
+}
+
+.t-btn {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    backdrop-filter: blur(4px);
+    touch-action: manipulation;
+    user-select: none;
+    cursor: pointer;
+}
+
+.t-btn:active {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(0.95);
+}
+
+.p1-touch .t-btn {
+    border-color: rgba(0, 243, 255, 0.5);
+}
+
+.p2-touch .t-btn {
+    border-color: rgba(188, 19, 254, 0.5);
+}
+
+@media (max-width: 1024px) {
+    .touch-controls {
+        display: flex;
+    }
+}
