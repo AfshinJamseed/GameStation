@@ -11,37 +11,37 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body>
-    <div class="container">
-        <nav class="nav-bar">
-            <a href="../index.html" class="back-link">
-                <span>←</span> Back to Hub
-            </a>
-            <h3>Type Speed Test</h3>
-        </nav>
 
-        <div class="game-container">
-            <div class="game-stats">
-                <div class="stat-item">Time: <span id="timer" class="stat-value">60</span>s</div>
-                <div class="stat-item">WPM: <span id="wpm" class="stat-value">0</span></div>
-                <div class="stat-item">Accuracy: <span id="accuracy" class="stat-value">100</span>%</div>
-                <div class="stat-item">Best: <span id="bestWPM" class="stat-value">0</span> WPM</div>
-            </div>
+<div class="container">
+    <nav class="nav-bar">
+        <a href="../index.html" class="back-link">
+            <span>←</span> Back to Hub
+        </a>
+        <h3>Type Speed Test</h3>
+    </nav>
 
-            <div class="typing-area">
-                <div id="textDisplay" class="text-display"></div>
-                <textarea id="typingInput" class="typing-input" placeholder="Click here and start typing..."
-                    disabled></textarea>
-            </div>
+    <div class="game-container">
+        <div class="game-stats">
+            <div class="stat-item">Time: <span id="timer" class="stat-value">60</span>s</div>
+            <div class="stat-item">WPM: <span id="wpm" class="stat-value">0</span></div>
+            <div class="stat-item">Accuracy: <span id="accuracy" class="stat-value">100</span>%</div>
+            <div class="stat-item">Best: <span id="bestWPM" class="stat-value">0</span> WPM</div>
+        </div>
 
-            <div class="controls">
-                <button class="btn btn-primary" id="startBtn">Start Test</button>
-            </div>
+        <div class="typing-area">
+            <div id="textDisplay" class="text-display"></div>
+            <textarea id="typingInput" class="typing-input" placeholder="Click here and start typing..."
+                disabled></textarea>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-primary" id="startBtn">Start Test</button>
         </div>
     </div>
-    <script src="../modal.js"></script>
-    <script src="type-test.js"></script>
-    <script type="module" src="../script.js"></script>
+</div>
+<script src="../modal.js"></script>
+<script src="type-test.js"></script>
+<script type="module" src="../script.js"></script>
 </body>
 
 </html>

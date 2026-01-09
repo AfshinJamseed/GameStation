@@ -9,42 +9,42 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body>
-    <div class="container">
-        <nav class="nav-bar">
-            <a href="../index.html" class="back-link">
-                <span>←</span> Back to Hub
-            </a>
-            <h3>Neon Snake</h3>
-        </nav>
 
-        <div class="game-container">
-            <div class="controls-top">
-                <label for="difficulty">Speed:</label>
-                <select id="difficulty" class="difficulty-select">
-                    <option value="SLOW">Slow</option>
-                    <option value="NORMAL" selected>Normal</option>
-                    <option value="FAST">Fast</option>
-                    <option value="INSANE">Insane</option>
-                </select>
-            </div>
+<div class="container">
+    <nav class="nav-bar">
+        <a href="../index.html" class="back-link">
+            <span>←</span> Back to Hub
+        </a>
+        <h3>Neon Snake</h3>
+    </nav>
 
-            <div class="score-board">
-                <div class="score-item">Score: <span id="score" class="score-value">0</span></div>
-                <div class="score-item">High Score: <span id="highScore" class="score-value">0</span></div>
-            </div>
-
-            <canvas id="snakeCanvas" width="400" height="400"></canvas>
-
-            <div class="controls">
-                <button class="btn btn-primary" id="startBtn">Start Game</button>
-            </div>
-
-            <p style="margin-top: 1rem; color: var(--text-secondary);">Use Arrow Keys or WASD to move</p>
+    <div class="game-container">
+        <div class="controls-top">
+            <label for="difficulty">Speed:</label>
+            <select id="difficulty" class="difficulty-select">
+                <option value="SLOW">Slow</option>
+                <option value="NORMAL" selected>Normal</option>
+                <option value="FAST">Fast</option>
+                <option value="INSANE">Insane</option>
+            </select>
         </div>
+
+        <div class="score-board">
+            <div class="score-item">Score: <span id="score" class="score-value">0</span></div>
+            <div class="score-item">High Score: <span id="highScore" class="score-value">0</span></div>
+        </div>
+
+        <canvas id="snakeCanvas" width="400" height="400"></canvas>
+
+        <div class="controls">
+            <button class="btn btn-primary" id="startBtn">Start Game</button>
+        </div>
+
+        <p style="margin-top: 1rem; color: var(--text-secondary);">Use Arrow Keys or WASD to move</p>
     </div>
-    <script src="snake.js"></script>
-    <script type="module" src="../script.js"></script>
+</div>
+<script src="snake.js"></script>
+<script type="module" src="../script.js"></script>
 </body>
 
 </html>

@@ -10,42 +10,42 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body>
-    <div class="container">
-        <nav class="nav-bar">
-            <a href="../index.html" class="back-link">
-                <span>←</span> Back to Multiplayer
-            </a>
-            <h3>Gravity Switch</h3>
-        </nav>
 
-        <div class="game-container">
-            <div class="gravity-hud">
-                <div class="player-info">
-                    <div class="player-name">Player 1</div>
-                    <div class="score-display"><span id="p1Stars">✅</span></div>
-                    <div class="controls-hint">Q to Flip</div>
-                </div>
+<div class="container">
+    <nav class="nav-bar">
+        <a href="../index.html" class="back-link">
+            <span>←</span> Back to Multiplayer
+        </a>
+        <h3>Gravity Switch</h3>
+    </nav>
 
-                <div class="gravity-display" id="gravityDisplay">
-                    P1: ⬇️ | P2: ⬇️
-                </div>
-
-                <div class="player-info">
-                    <div class="player-name">Player 2</div>
-                    <div class="score-display"><span id="p2Stars">✅</span></div>
-                    <div class="controls-hint">Shift to Flip</div>
-                </div>
+    <div class="game-container">
+        <div class="gravity-hud">
+            <div class="player-info">
+                <div class="player-name">Player 1</div>
+                <div class="score-display"><span id="p1Stars">✅</span></div>
+                <div class="controls-hint">Q to Flip</div>
             </div>
 
-            <canvas id="gravityCanvas"></canvas>
+            <div class="gravity-display" id="gravityDisplay">
+                P1: ⬇️ | P2: ⬇️
+            </div>
 
-            <div class="game-message" id="gameMessage" style="display: none;"></div>
-            <button class="btn btn-glass" id="resetBtn" style="display: none;">New Race</button>
+            <div class="player-info">
+                <div class="player-name">Player 2</div>
+                <div class="score-display"><span id="p2Stars">✅</span></div>
+                <div class="controls-hint">Shift to Flip</div>
+            </div>
         </div>
+
+        <canvas id="gravityCanvas"></canvas>
+
+        <div class="game-message" id="gameMessage" style="display: none;"></div>
+        <button class="btn btn-glass" id="resetBtn" style="display: none;">New Race</button>
     </div>
-    <script src="gravity.js"></script>
-    <script type="module" src="../../script.js"></script>
+</div>
+<script src="gravity.js"></script>
+<script type="module" src="../../script.js"></script>
 </body>
 
 </html>

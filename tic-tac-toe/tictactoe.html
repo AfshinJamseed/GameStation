@@ -9,48 +9,48 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body>
-    <div class="container">
-        <nav class="nav-bar">
-            <a href="../index.html" class="back-link">
-                <span>←</span> Back to Hub
-            </a>
-            <h3>Tic-Tac-Toe</h3>
-        </nav>
 
-        <div class="game-container">
-            <div class="controls-top">
-                <label for="difficulty">Mode:</label>
-                <select id="difficulty" class="difficulty-select">
-                    <option value="2P">2 Player</option>
-                    <option value="EASY">AI (Easy)</option>
-                    <option value="MEDIUM">AI (Medium)</option>
-                    <option value="HARD">AI (Hard)</option>
-                </select>
-            </div>
+<div class="container">
+    <nav class="nav-bar">
+        <a href="../index.html" class="back-link">
+            <span>←</span> Back to Hub
+        </a>
+        <h3>Tic-Tac-Toe</h3>
+    </nav>
 
-            <div class="status-text" id="status">Player X's Turn</div>
+    <div class="game-container">
+        <div class="controls-top">
+            <label for="difficulty">Mode:</label>
+            <select id="difficulty" class="difficulty-select">
+                <option value="2P">2 Player</option>
+                <option value="EASY">AI (Easy)</option>
+                <option value="MEDIUM">AI (Medium)</option>
+                <option value="HARD">AI (Hard)</option>
+            </select>
+        </div>
 
-            <div class="board" id="board">
-                <div class="winning-line" id="winningLine"></div>
-                <div class="cell" data-cell></div>
-                <div class="cell" data-cell></div>
-                <div class="cell" data-cell></div>
-                <div class="cell" data-cell></div>
-                <div class="cell" data-cell></div>
-                <div class="cell" data-cell></div>
-                <div class="cell" data-cell></div>
-                <div class="cell" data-cell></div>
-                <div class="cell" data-cell></div>
-            </div>
+        <div class="status-text" id="status">Player X's Turn</div>
 
-            <div class="controls">
-                <button class="btn btn-primary" id="restartBtn">Restart Game</button>
-            </div>
+        <div class="board" id="board">
+            <div class="winning-line" id="winningLine"></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+            <div class="cell" data-cell></div>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-primary" id="restartBtn">Restart Game</button>
         </div>
     </div>
-    <script src="tictactoe.js"></script>
-    <script type="module" src="../script.js"></script>
+</div>
+<script src="tictactoe.js"></script>
+<script type="module" src="../script.js"></script>
 </body>
 
 </html>
